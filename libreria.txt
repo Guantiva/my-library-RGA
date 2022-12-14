@@ -1,0 +1,179 @@
+
+this.createBookEvent.emit(newBook);
+thishasRegistere = true
+
+BookList
+Muestra todos los libros (clic en ellos)
+se debe visualizar
+
+BookEdit (Formualrio con datos actualiza)
+
+LenBook Formulario persona a que se presta
+
+Bookregistration Crear un nuevo libro
+
+
+
+ng generate component book-list
+ng generate component book-detail
+ng generate component book-registration
+
+models
+book.model.ts
+
+export class Book{
+   name: string
+   author: string
+   genre: string
+   publishedYear?: number
+   description?: string=""
+  constructor(
+   name: string,
+   author: string,
+   genre: string,
+   publishedYear: number,
+   description: string,
+  ){
+   this.name = name
+   this.author =  author
+   this.genre = genre
+   this.publishedYear = publishedYear
+  this.description = description
+
+}
+
+app.component.ts
+title= 'my-lybarue'
+books:  Book[] = [
+     new Book('Don Quijote','CErvantes','Novela',1800,"" ),   
+     new Book('100 años de soledad','Garcia Marquez','Novela',1800,"" ),   
+     new Book('El señor de los anillos','Tolkien','Fantasi,1800,"" ),   
+]
+
+
+
+book-list.component.tst
+
+export class BookListComponent{
+   @Input() books: Book[]
+}
+
+app.component.html
+app-book-list [books]="books" <app-book-list>
+
+book-list-component.ts
+@input() books: Book[] = []
+
+book-list-component.htlm
+<h2> {{title}}</h2>
+<ul>
+   <li *ngfor="let book of books;">
+      {{book.name}} {{book.author}}      
+   </li> 
+</ul>
+
+
+
+----
+
+book/registration.ts
+
+import componente Even Output
+impor {{Book}
+export
+@Output() createBookEvent= newEvenEmitter<Book>()
+ 
+
+addBook(){
+    const newBook= new Book("","","",0"")
+    this.createBokEvent.emit(newBook)
+}
+
+
+
+>app-book-registratio (createBookEvent="createBook($event)"
+
+en app.componente 
+ createBook(newBook: Book){
+   this
+}
+
+
+<form>
+
+ <label for="name">Nombre:</label>
+ <input tupe="text" id="name" [(ngModel)]="inputName">
+ <label for="author">Autor:</label>
+ <input tupe="text" id="author" [(ngModel)]="inputAuthor">
+ <label for="genre">Género:</label>
+ <input tupe="text" id="genre" [(ngModel)]="inputGenre">
+ <label for="year">Año publicacion:</label>
+ <input tupe="number" id="year" [(ngModel)]="inputYear">
+ <label for="description">Descirpción:</label>
+ <input tupe="text" id="description" [(ngModel)]="inputDscription">
+  <input type="submit" (click)='addBook()'>
+</form>
+
+
+
+componet.html
+<app-book-list [books]= "books" (selectBookEvent)>="setSelectedBook"
+
+componet.ts
+
+selectedBook: Book =this.books[0]
+
+setSelectedBook(selectBook: Book){
+ this.selectdBook =  selectBook 
+}
+
+--------
+Book detail
+
+En el expot
+title='Detalle del libro'
+@Input() book?: Book
+
+
+detail-html
+<h2>{{ title}}</h2>
+<div>
+  <p> Nombre: {{book?.name}}</p>
+  <p> Autor: {{book?.author}}</p>
+  <p> Género: {{book?.gene}}</p>
+  <p> Año publicación: {{book?.publishedYear}}</p>
+  <p> Descripción: {{book?.descriptio}}</p>
+</div>
+
+app-cpomponente.html
+
+<app-book-detail [book]="selectedBook"></app-book-detail>
+
+
+Log
+New folrder services dentro de app
+  logger.services.ts
+
+@Injectable ({
+  providedIn:'root'
+})
+
+export class logger{
+   log(message:string){
+     console.log(message)
+   }
+error(message:string){
+       console.error(message)
+]
+}
+
+
+constructor( private logger: Logger){}   
+
+this.logger.log(Se ha creado un nuevo libro)
+
+
+constructor( private logger: Logger){}   
+this.logger.log("Se ha seleccionado un nuevo libro"+book.name)
+
+
