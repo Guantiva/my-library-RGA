@@ -9,12 +9,4 @@ import { BookService } from './services/book.service';
 export class AppComponent {
   title = 'My library';
       
-      constructor(private bookService: BookService ){
-        this.books = this.bookService.books
-      }
-      books: Book[]=[]
-      selectedBook: Book =this.books[0]
-      setSelectedBook(selectBook: Book){
-        this.selectedBook =  selectBook 
-       }
 }

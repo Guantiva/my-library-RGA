@@ -11,9 +11,16 @@ export class BookService {
     new Book('El señor de los anillos','Tolkien','Fantasia',2000,"" )
    ]
 
+  selectedBook: Book =this.books[0]   
   constructor() { }
 
   createBook(newbook: Book ) {
     this.books.push(newbook)
   } 
+
+  
+  setSelectedBook(selectBook: Book){
+    this.selectedBook =  selectBook 
+   }
+
 }

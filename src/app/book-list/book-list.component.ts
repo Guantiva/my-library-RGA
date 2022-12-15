@@ -1,7 +1,8 @@
-import { Component,EventEmitter,Input,Output } from '@angular/core';
+import { Component,EventEmitter,Input,Output,OnInit } from '@angular/core';
 import { Book } from '../models/book.model';
 import { Logger } from '../services/logger.services';
 import { AlertService } from '../services/alert.service';
+import { BookService } from '../services/book.service';
 
 @Component({
   selector: 'app-book-list',
@@ -9,18 +10,20 @@ import { AlertService } from '../services/alert.service';
   styleUrls: ['./book-list.component.css']
   //providers: [Logger] para dejar un servicio, pero se debe quitar root del service
 })
-export class BookListComponent {
+export class BookListComponent implements OnInit {
   title='Lista de Libros'
-  @Input() books: Book[] = [];
-  @Output() selectBookEvent = new EventEmitter<Book>()
-
+  books: Book[] = [];
+ 
+  constructor(private logger: Logger, private alertService: AlertService, private bookService : BookService ){}
   
-  constructor(private logger: Logger, private alertService: AlertService){}
+  ngOnInit(): void {
+    console.log(this.bookService.books);
+    this.books = this.bookService.books
+   } 
    
-
   //constructor(private logger: Logger){}   
   selectBook(book: Book){
-    this.selectBookEvent.emit(book)
+    this.bookService.setSelectedBook(book)
     const message = "Se ha seleccionado el libro "+book.name
     this.logger.log(message)
     this.alertService.showAlert(message)
