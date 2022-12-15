@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Book } from './models/book.model';
+import { BookService } from './services/book.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,17 +8,12 @@ import { Book } from './models/book.model';
 })
 export class AppComponent {
   title = 'My library';
-  books:  Book[] = [
-       new Book('Don Quijote','Cervantes','Novela',1800,"" ),   
-       new Book('100 años de soledad','Garcia Marquez','Novela',1980,"" ),   
-       new Book('El señor de los anillos','Tolkien','Fantasia',2000,"" )
-      ]
+      
+      constructor(private bookService: BookService ){
+        this.books = this.bookService.books
+      }
+      books: Book[]=[]
       selectedBook: Book =this.books[0]
-
-      createBook(newbook: Book ) {
-        this.books.push(newbook)
-      } 
-
       setSelectedBook(selectBook: Book){
         this.selectedBook =  selectBook 
        }
