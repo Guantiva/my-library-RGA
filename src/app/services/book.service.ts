@@ -1,26 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Book } from '../models/book.model';
+import { Book } from '../models/book.model'; 
+import { DataService } from './data.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
-  books:  Book[] = [
-    new Book('Don Quijote','Cervantes','Novela',1800,"" ),   
-    new Book('100 años de soledad','Garcia Marquez','Novela',1980,"" ),   
-    new Book('El señor de los anillos','Tolkien','Fantasia',2000,"" )
-   ]
+  books: Book[] = []
+  selectedBook: Book = this.books[0]
 
-  selectedBook: Book =this.books[0]   
-  constructor() { }
+  constructor(private dataService: DataService) { 
+    this.dataService.getBooks().subscribe(
+      response => this.books = Object.values(response)
+    )
+  }
 
-  createBook(newbook: Book ) {
-    this.books.push(newbook)
-  } 
-
-  
-  setSelectedBook(selectBook: Book){
-    this.selectedBook =  selectBook 
+  createBook(newBook: Book) {
+    this.books.push(newBook)
+    this.dataService.saveBooks(this.books)
    }
 
+  setSelectedBook(selectBook: Book) {
+    this.selectedBook = selectBook
+  }
+
+  getBooks() {
+    return this.dataService.getBooks()
+  }
+
+  getBookByIndex(index: number){
+    return this.books[index]
+  }
 }
